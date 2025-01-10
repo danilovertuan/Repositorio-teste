@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Desvio Craniano (CVAI)</title>
+    <title>Calculadora de Desvio Craniano</title>
     <style>
         body {
             background-color: #B3E5FC;
@@ -40,6 +40,15 @@
         h3 {
             margin-top: 20px;
         }
+        /* Estilo da caixa de Grau */
+        #grauBox {
+            display: inline-block;
+            padding: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -54,7 +63,7 @@
     <button onclick="calcularDesvio()">Calcular</button>
 
     <h3>CVAI: <span id="cvai"></span>%</h3>
-    <h3>Grau: <span id="grau"></span></h3>
+    <h3>Grau: <span id="grauBox">-</span></h3>
 
     <script>
         function calcularDesvio() {
@@ -63,7 +72,8 @@
 
             if (isNaN(d1) || isNaN(d2) || d1 <= 0 || d2 <= 0) {
                 document.getElementById('cvai').textContent = "Insira valores válidos.";
-                document.getElementById('grau').textContent = "";
+                document.getElementById('grauBox').textContent = "";
+                document.getElementById('grauBox').style.backgroundColor = ''; // Limpa a cor
                 return;
             }
 
@@ -72,21 +82,30 @@
             let cvai = ((maior - menor) * 100) / maior;
             document.getElementById('cvai').textContent = cvai.toFixed(2);
 
-            // Determinar o Grau
-            let grau;
+            // Determinar o Grau e a cor
+            let grau, cor;
             if (cvai < 3.5) {
                 grau = "1 - Normal";
+                cor = "#4CAF50"; // Verde
             } else if (cvai <= 6.25) {
                 grau = "2 - Leve";
+                cor = "#8BC34A"; // Verde amarelado
             } else if (cvai <= 8.75) {
                 grau = "3 - Moderado";
+                cor = "#FFEB3B"; // Amarelo
             } else if (cvai <= 11) {
                 grau = "4 - Severo";
+                cor = "#FF9800"; // Laranja
             } else {
                 grau = "5 - Muito Severo";
+                cor = "#F44336"; // Vermelho
             }
-            document.getElementById('grau').textContent = grau;
+
+            // Atualizar a exibição do grau com a cor
+            document.getElementById('grauBox').textContent = grau;
+            document.getElementById('grauBox').style.backgroundColor = cor;
         }
     </script>
 </body>
 </html>
+
