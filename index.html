@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Desvio Craniano</title>
+</head>
+<body>
+    <h1>Calculadora de Desvio Craniano</h1>
+
+    <label for="diagonal1">Digite a Diagonal 1 (mm):</label>
+    <input type="number" id="diagonal1" placeholder="Diagonal 1" required><br><br>
+
+    <label for="diagonal2">Digite a Diagonal 2 (mm):</label>
+    <input type="number" id="diagonal2" placeholder="Diagonal 2" required><br><br>
+
+    <button onclick="calcularDesvio()">Calcular Desvio</button>
+
+    <h3>Resultado: <span id="resultado"></span> %</h3>
+
+    <script>
+        function calcularDesvio() {
+            let d1 = parseFloat(document.getElementById('diagonal1').value);
+            let d2 = parseFloat(document.getElementById('diagonal2').value);
+
+            if (isNaN(d1) || isNaN(d2) || d1 <= 0 || d2 <= 0) {
+                document.getElementById('resultado').textContent = "Insira valores válidos.";
+                return;
+            }
+
+            let maior = Math.max(d1, d2);
+            let menor = Math.min(d1, d2);
+
+            let desvio = ((maior - menor) * 100) / maior;
+            document.getElementById('resultado').textContent = desvio.toFixed(2);
+        }
+    </script>
+</body>
+</html>
