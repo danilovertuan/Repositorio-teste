@@ -4,15 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Desvio Craniano</title>
+    <style>
+        body {
+            background-color: #B3E5FC; /* Azul bebê pastel */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #01579B;
+        }
+        label {
+            display: block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        input {
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0288D1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0277BD;
+        }
+        h3 {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Calculadora de Desvio Craniano</h1>
 
     <label for="diagonal1">Digite a Diagonal 1 (mm):</label>
-    <input type="number" id="diagonal1" placeholder="Diagonal 1" required><br><br>
+    <input type="number" id="diagonal1" placeholder="Diagonal 1" required><br>
 
     <label for="diagonal2">Digite a Diagonal 2 (mm):</label>
-    <input type="number" id="diagonal2" placeholder="Diagonal 2" required><br><br>
+    <input type="number" id="diagonal2" placeholder="Diagonal 2" required><br>
 
     <button onclick="calcularDesvio()">Calcular Desvio</button>
 
