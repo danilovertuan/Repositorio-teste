@@ -10,6 +10,12 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
         h1 {
             color: #01579B;
@@ -33,6 +39,8 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
         }
         button:hover {
             background-color: #0277BD;
@@ -41,18 +49,27 @@
             margin-top: 20px;
         }
         /* Estilo da caixa de Grau */
-        #grauBox {
+        .grauBox {
             display: inline-block;
             padding: 10px;
-            margin-top: 10px;
+            margin-left: 10px;
             font-weight: bold;
             border-radius: 5px;
             color: white;
         }
+        /* Container para exibir CVAI e CVA com os respectivos graus ao lado */
+        .resultado-container {
+            display: inline-block;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .resultado-container h3 {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
-    <h1>Calculadora de Desvio Craniano (CVAI)</h1>
+    <h1>Calculadora de Desvio Craniano</h1>
 
     <label for="diagonal1">Diagonal 1 (mm):</label>
     <input type="number" id="diagonal1" placeholder="Diagonal 1"><br>
@@ -60,10 +77,13 @@
     <label for="diagonal2">Diagonal 2 (mm):</label>
     <input type="number" id="diagonal2" placeholder="Diagonal 2"><br>
 
+    <!-- Botão de calcular agora centralizado -->
     <button onclick="calcularDesvio()">Calcular</button>
 
-    <h3>CVAI: <span id="cvai"></span>%</h3>
-    <h3>Grau: <span id="grauBox">-</span></h3>
+    <div class="resultado-container">
+        <h3>CVAI: <span id="cvai"></span>% <span id="grauBoxCVAI" class="grauBox">-</span></h3>
+        <h3>CVA: <span id="cva"></span> mm <span id="grauBoxCVA" class="grauBox">-</span></h3>
+    </div>
 
     <script>
         function calcularDesvio() {
@@ -72,40 +92,66 @@
 
             if (isNaN(d1) || isNaN(d2) || d1 <= 0 || d2 <= 0) {
                 document.getElementById('cvai').textContent = "Insira valores válidos.";
-                document.getElementById('grauBox').textContent = "";
-                document.getElementById('grauBox').style.backgroundColor = ''; // Limpa a cor
+                document.getElementById('grauBoxCVAI').textContent = "";
+                document.getElementById('grauBoxCVA').textContent = "";
+                document.getElementById('grauBoxCVAI').style.backgroundColor = '';
+                document.getElementById('grauBoxCVA').style.backgroundColor = '';
                 return;
             }
 
             let maior = Math.max(d1, d2);
             let menor = Math.min(d1, d2);
+
+            // Cálculo do CVAI
             let cvai = ((maior - menor) * 100) / maior;
             document.getElementById('cvai').textContent = cvai.toFixed(2);
 
-            // Determinar o Grau e a cor
-            let grau, cor;
+            // Cálculo do CVA
+            let cva = maior - menor;
+            document.getElementById('cva').textContent = cva.toFixed(2);
+
+            // Determinar o Grau e a cor do CVAI
+            let grauCVAI, corCVAI;
             if (cvai < 3.5) {
-                grau = "1 - Normal";
-                cor = "#4CAF50"; // Verde
+                grauCVAI = "1 - Normal";
+                corCVAI = "#4CAF50"; // Verde
             } else if (cvai <= 6.25) {
-                grau = "2 - Leve";
-                cor = "#8BC34A"; // Verde amarelado
+                grauCVAI = "2 - Leve";
+                corCVAI = "#8BC34A"; // Verde amarelado
             } else if (cvai <= 8.75) {
-                grau = "3 - Moderado";
-                cor = "#FFEB3B"; // Amarelo
+                grauCVAI = "3 - Moderado";
+                corCVAI = "#FFEB3B"; // Amarelo
             } else if (cvai <= 11) {
-                grau = "4 - Severo";
-                cor = "#FF9800"; // Laranja
+                grauCVAI = "4 - Severo";
+                corCVAI = "#FF9800"; // Laranja
             } else {
-                grau = "5 - Muito Severo";
-                cor = "#F44336"; // Vermelho
+                grauCVAI = "5 - Muito Severo";
+                corCVAI = "#F44336"; // Vermelho
             }
 
-            // Atualizar a exibição do grau com a cor
-            document.getElementById('grauBox').textContent = grau;
-            document.getElementById('grauBox').style.backgroundColor = cor;
+            // Determinar o Grau e a cor do CVA
+            let grauCVA, corCVA;
+            if (cva < 3) {
+                grauCVA = "Normal";
+                corCVA = "#4CAF50"; // Verde
+            } else if (cva <= 10) {
+                grauCVA = "Leve";
+                corCVA = "#8BC34A"; // Verde amarelado
+            } else if (cva <= 12) {
+                grauCVA = "Moderado";
+                corCVA = "#FFEB3B"; // Amarelo
+            } else {
+                grauCVA = "Severo";
+                corCVA = "#F44336"; // Vermelho
+            }
+
+            // Atualizar a exibição do grau com a cor ao lado dos resultados
+            document.getElementById('grauBoxCVAI').textContent = grauCVAI;
+            document.getElementById('grauBoxCVAI').style.backgroundColor = corCVAI;
+
+            document.getElementById('grauBoxCVA').textContent = grauCVA;
+            document.getElementById('grauBoxCVA').style.backgroundColor = corCVA;
         }
     </script>
 </body>
 </html>
-
